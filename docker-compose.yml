@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
 
   #PHP Service
@@ -17,8 +17,8 @@ services:
     volumes:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
+    external_links:
+     - mariadb:mariadb
 
   #Nginx Service
   webserver:
@@ -32,34 +32,34 @@ services:
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
-
-  #MySQL Service
-  db:
-    image: mysql:5.7.22
-    container_name: db
+    external_links:
+     - mariadb:mariadb
+     - phpmyadmin:phpmyadmin
+  
+  mariadb:
+    image: mariadb
+    container_name: mariadb
     restart: unless-stopped
-    tty: true
-    ports:
-      - "3306:3306"
     environment:
-      MYSQL_DATABASE: laravelapp
-      MYSQL_ROOT_PASSWORD: abc123
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      SERVICE_NAME: ${DB_CONNECTION}
     volumes:
-      - dbdata:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - app-network
-
-#Docker Networks
-networks:
-  app-network:
-    driver: bridge
-
-#Volumes
-volumes:
-  dbdata:
-    driver: local
+      - ./mariadb/my.cnf:/etc/mysql/my.cnf
+      - ./mariadb:/var/lib/mysql
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      - MYSQL_USERNAME=${DB_USERNAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - PMA_HOST=mariadb
+    ports:
+      - "8082:80"
+    external_links:
+      - mariadb:mariadb
+    volumes:
+      - "./phpmyadmin/sessions:/sessions"
