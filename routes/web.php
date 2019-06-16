@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (view()->exists('welcome'))
+    return view('welcome', ['appName' => env('APP_NAME')]);
 });

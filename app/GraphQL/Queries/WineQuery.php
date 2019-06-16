@@ -1,9 +1,10 @@
-// ./app/GraphQL/Queries/WineQuery.php
-
 <?php
+
+// ./app/GraphQL/Queries/WineQuery.php
 
 namespace App\GraphQL\Queries;
 
+use GraphQL;
 use App\Wine;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;

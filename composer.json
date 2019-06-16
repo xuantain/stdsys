@@ -1,9 +1,9 @@
 {
-    "name": "laravel/laravel",
+    "name": "stdsys",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "The Stdsys app built by Laravel Framework.",
     "keywords": [
-        "framework",
+        "std",
         "laravel"
     ],
     "license": "MIT",

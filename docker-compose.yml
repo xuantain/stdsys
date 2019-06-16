@@ -1,4 +1,5 @@
 version: '3.2'
+
 services:
 
   #PHP Service
@@ -7,59 +8,59 @@ services:
       context: .
       dockerfile: Dockerfile
     image: digitalocean.com/php
-    container_name: app
-    restart: unless-stopped
+    container_name: std_app
+    restart: always
     tty: true
     environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
+      SERVICE_NAME: ${APP_NAME}
+      SERVICE_TAGS: ${APP_ENV}
     working_dir: /var/www
     volumes:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     external_links:
-     - mariadb:mariadb
+     - db
 
   #Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: webserver
-    restart: unless-stopped
+    container_name: std_webserver
+    restart: always
     tty: true
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     external_links:
-     - mariadb:mariadb
-     - phpmyadmin:phpmyadmin
-  
-  mariadb:
+     - db
+     - phpmyadmin
+
+  db:
     image: mariadb
-    container_name: mariadb
-    restart: unless-stopped
+    container_name: std_db
+    restart: always
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: ${DB_CONNECTION}
+      SERVICE_NAME: ${APP_NAME}
+      SERVICE_TAGS: ${APP_ENV}
     volumes:
       - ./mariadb/my.cnf:/etc/mysql/my.cnf
-      - ./mariadb:/var/lib/mysql
-  
+      - ./mariadb/data:/var/lib/mysql
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: std_phpmyadmin
     restart: always
     environment:
       - MYSQL_USERNAME=${DB_USERNAME}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - PMA_HOST=mariadb
+      - PMA_HOST=db
     ports:
-      - "8082:80"
+      - 8082:80
     external_links:
-      - mariadb:mariadb
+      - db
     volumes:
-      - "./phpmyadmin/sessions:/sessions"
+      - ./phpmyadmin/sessions:/sessions

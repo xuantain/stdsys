@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Queries;
 
+use GraphQL;
 use App\Wine;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
