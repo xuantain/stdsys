@@ -114,7 +114,8 @@ return [
             'query' => [
                 'wine' => App\GraphQL\Queries\WineQuery::class,
                 'wines' => App\GraphQL\Queries\WinesQuery::class,
-            ]
+            ],
+            'middleware' => ['checkAccess'],
         ],
     ],
     // The types available in the application. You can then access it from the

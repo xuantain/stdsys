@@ -24,3 +24,6 @@ Once the migration is complete, you can run a query to check if you are properly
 `docker-compose exec app php artisan tinker`
 Test the MySQL connection by getting the data you just migrated:
 `\DB::table('migrations')->get();`
+
+#### For Dev
+> Install Chrome addon "Modify Headers" and add Authorization with Bearer token.
