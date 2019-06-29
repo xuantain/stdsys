@@ -17,10 +17,10 @@ class CheckAccess
                 'supported_algs' => ['RS256']
             ]);
             $token = $request->bearerToken();
-            $decodedToken = $verifier->verifyAndDecode($token);
-            if (!$decodedToken) {
-                abort(403, 'Access denied');
-            }
+            // $decodedToken = $verifier->verifyAndDecode($token);
+            // if (!$decodedToken) {
+            //     abort(403, 'Access denied');
+            // }
         }
         return $next($request);
     }
