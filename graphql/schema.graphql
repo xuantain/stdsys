@@ -9,10 +9,4 @@ type Query {
     user(id: ID @eq): User @find(model: "App\\User")
 }
 
-type User {
-    id: ID!
-    name: String!
-    email: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-}
+#import user.graphql
