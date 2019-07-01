@@ -1,0 +1,5 @@
+type Course {
+    name: String!
+    description: String!
+    lessons: [Lesson!]! @paginate(type: "paginator" model: "App\\User")
+}
