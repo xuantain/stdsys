@@ -85,7 +85,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <a href="{{url()->current() . '/graphiql'}}">
+                    <a href="{{url()->current() . '/graphql-playground'}}">
                         {{$appName}}
                     </a>
                 </div>
