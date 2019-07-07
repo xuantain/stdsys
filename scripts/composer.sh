@@ -2,7 +2,7 @@
 
 docker run --rm \
     --user $(id -u):$(id -g) \
-    --volume $PWD:/var/www \
+    --volume $PWD/webroot:/var/www \
     --volume $HOME/.composer:/.composer \
     --workdir /var/www \
     --entrypoint "composer" \

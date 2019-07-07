@@ -5,19 +5,21 @@ services:
   #PHP Service
   app:
     build:
-      context: .
+      context: ./docker/php
       dockerfile: Dockerfile
     image: digitalocean.com/php
     container_name: std_app
     restart: always
     tty: true
+    env_file:
+      - .env
     environment:
       SERVICE_NAME: ${APP_NAME}
       SERVICE_TAGS: ${APP_ENV}
     working_dir: /var/www
     volumes:
-      - ./:/var/www
-      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./webroot:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     external_links:
      - db
 
@@ -31,8 +33,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./webroot:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     external_links:
      - db
      - phpmyadmin
@@ -47,8 +49,8 @@ services:
       SERVICE_NAME: ${APP_NAME}
       SERVICE_TAGS: ${APP_ENV}
     volumes:
-      - ./mariadb/my.cnf:/etc/mysql/my.cnf
-      - ./mariadb/data:/var/lib/mysql
+      - ./docker/mariadb/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mariadb/data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -63,4 +65,4 @@ services:
     external_links:
       - db:db
     volumes:
-      - ./phpmyadmin/sessions:/sessions
+      - ./docker/phpmyadmin/sessions:/sessions

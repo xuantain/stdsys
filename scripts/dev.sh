@@ -23,7 +23,7 @@ echo Installing dependencies
 
 echo Seeding database
 
-rm -f bootstrap/cache/*.php
+rm -f ./webroot/bootstrap/cache/*.php
 
 docker-compose exec app php artisan migrate --env=dev && echo Database migrated
 docker-compose exec app php artisan db:seed --env=dev && echo Database seeded

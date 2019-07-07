@@ -1,14 +1,18 @@
-/node_modules
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
-.env
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/phpmyadmin/sessions/*
-/mariadb/data/*
+# webroot
+webroot/node_modules
+webroot/public/hot
+webroot/public/storage
+webroot/storage/*.key
+webroot/vendor
+webroot/.phpunit.result.cache
+webroot/Homestead.json
+webroot/Homestead.yaml
+webroot/npm-debug.log
+webroot/yarn-error.log
+
+# docker
+docker/phpmyadmin/sessions/*
+docker/mariadb/data/*
 /.composer
+
+.env
